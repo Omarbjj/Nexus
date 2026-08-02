@@ -4,6 +4,9 @@ import { Button, TextField } from "@mui/material";
 import "./Login.scss";
 import type { loginForm } from "../../types/User";
 import { signIn } from "../../services/authService";
+import fondoNuevaIlustracion from "../../assets/fondo-nueva-ilustracion.jpg";
+import Input from "../../components/Input/Input";
+import { Title } from "../../components/Title/Title.ts";
 
 function Login () {
     const navigate = useNavigate();
@@ -35,8 +38,15 @@ function Login () {
     };
 
     return (
-        <div className="login">
+        <div className="login" style={{
+            backgroundImage: `url(${fondoNuevaIlustracion})`
+        }}>
             {/* <p>NUEVA ILUSTRACION</p> */}
+            <Title>
+                NUEVA
+                <br />
+                ILUSTRACIÓN
+            </Title>
             <form onSubmit={handleSubmit(onSubmit)}>
 
                 <Controller
@@ -47,9 +57,9 @@ function Login () {
                     }}
                     render={({ field }) => (
 
-                        <TextField
+                        <Input
                             {...field}
-                            label="email"
+                            type="text"
                         />
 
                     )}
@@ -63,10 +73,9 @@ function Login () {
                     }}
                     render={({ field }) => (
 
-                        <TextField
+                        <Input
                             {...field}
                             type="password"
-                            label="Contraseña"
                         />
 
                     )}
