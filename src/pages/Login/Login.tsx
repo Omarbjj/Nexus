@@ -5,7 +5,7 @@ import "./Login.scss";
 import type { loginForm } from "../../types/User";
 import { signIn } from "../../services/authService";
 import fondoNuevaIlustracion from "../../assets/fondo-nueva-ilustracion.jpg";
-import Input from "../../components/Input/Input";
+import { Input } from "../../components/Input/Input.tsx"
 import { Title } from "../../components/Title/Title.ts";
 
 function Login () {
@@ -15,10 +15,7 @@ function Login () {
         control,
         handleSubmit,
     } = useForm<loginForm>({
-        defaultValues: {
-            email: "",
-            password: "",
-        }
+        mode: "onChange",
     });
 
     const onSubmit = async (data: loginForm) => {
@@ -41,7 +38,6 @@ function Login () {
         <div className="login" style={{
             backgroundImage: `url(${fondoNuevaIlustracion})`
         }}>
-            {/* <p>NUEVA ILUSTRACION</p> */}
             <Title>
                 NUEVA
                 <br />
@@ -53,13 +49,18 @@ function Login () {
                     name="email"
                     control={control}
                     rules={{
-                        required: "Ingrese un correo"
+                        required: "Ingresa tu correo electrónico",
+                        pattern: {
+                            value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                            message: "Ingresa un correo electrónico válido"
+                        }
                     }}
-                    render={({ field }) => (
+                    render={({ field, fieldState }) => (
 
                         <Input
                             {...field}
-                            type="text"
+                            variant="email"
+                            error={fieldState.error?.message}
                         />
 
                     )}
@@ -69,13 +70,14 @@ function Login () {
                     name="password"
                     control={control}
                     rules={{
-                        required: "Ingrese una contraseña"
+                        required: "Ingresa tu contraseña"
                     }}
-                    render={({ field }) => (
+                    render={({ field, fieldState }) => (
 
                         <Input
                             {...field}
-                            type="password"
+                            variant="password"
+                            error={fieldState.error?.message}
                         />
 
                     )}
