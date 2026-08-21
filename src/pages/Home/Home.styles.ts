@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const Page = styled.main`
-    min-height: 100vh;
+    min-height: 100dvh;
     width: 100%;
 
     background:
@@ -14,17 +14,28 @@ export const Page = styled.main`
 
     color: #f3f4f6;
 
-    padding: 24px 20px 100px;
+    padding: 24px 20px 120px;
 
     box-sizing: border-box;
 
     overflow-x: hidden;
+
+    @media (max-width: 480px) {
+        padding: 20px 16px 120px;
+    }
+
+    @media (max-width: 360px) {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
 `;
 
 export const Container = styled.div`
     width: 100%;
     max-width: 700px;
     margin: 0 auto;
+
+    box-sizing: border-box;
 `;
 
 /* =========================
@@ -43,6 +54,18 @@ export const Header = styled.header`
     padding-top: 10px;
 
     box-sizing: border-box;
+
+    @media (max-width: 480px) {
+        min-height: 300px;
+    }
+
+    @media (max-width: 400px) {
+        min-height: 285px;
+    }
+
+    @media (max-width: 360px) {
+        min-height: 270px;
+    }
 `;
 
 export const HeaderLeft = styled.div`
@@ -50,6 +73,16 @@ export const HeaderLeft = styled.div`
     z-index: 2;
 
     width: 58%;
+
+    min-width: 0;
+
+    @media (max-width: 480px) {
+        width: 62%;
+    }
+
+    @media (max-width: 400px) {
+        width: 64%;
+    }
 `;
 
 export const MenuButton = styled.button`
@@ -68,6 +101,16 @@ export const MenuButton = styled.button`
     cursor: pointer;
 
     margin-bottom: 38px;
+
+    padding: 0;
+
+    @media (max-width: 480px) {
+        margin-bottom: 32px;
+    }
+
+    @media (max-width: 360px) {
+        margin-bottom: 26px;
+    }
 `;
 
 export const WelcomeTitle = styled.h1`
@@ -78,6 +121,14 @@ export const WelcomeTitle = styled.h1`
     font-weight: 700;
 
     letter-spacing: -1.5px;
+
+    max-width: 100%;
+
+    overflow-wrap: break-word;
+
+    @media (max-width: 400px) {
+        font-size: clamp(29px, 8vw, 36px);
+    }
 `;
 
 export const UserName = styled.span`
@@ -95,6 +146,18 @@ export const WelcomeDescription = styled.p`
 
     font-size: 16px;
     line-height: 1.55;
+
+    max-width: 230px;
+
+    @media (max-width: 400px) {
+        font-size: 15px;
+        margin-top: 16px;
+        max-width: 210px;
+    }
+
+    @media (max-width: 360px) {
+        font-size: 14px;
+    }
 `;
 
 export const ProfileImageWrapper = styled.div`
@@ -123,6 +186,29 @@ export const ProfileImageWrapper = styled.div`
         black 70%,
         transparent 100%
     );
+
+    -webkit-mask-image: linear-gradient(
+        to bottom,
+        black 70%,
+        transparent 100%
+    );
+
+    @media (max-width: 480px) {
+        right: -12px;
+        width: 56%;
+        height: 250px;
+    }
+
+    @media (max-width: 400px) {
+        right: -8px;
+        width: 54%;
+        height: 225px;
+    }
+
+    @media (max-width: 360px) {
+        width: 52%;
+        height: 210px;
+    }
 `;
 
 export const ProfileImage = styled.img`
@@ -133,6 +219,8 @@ export const ProfileImage = styled.img`
     object-position: center top;
 
     filter: saturate(0.9);
+
+    display: block;
 `;
 
 export const LogoutButton = styled.button`
@@ -164,9 +252,29 @@ export const LogoutButton = styled.button`
     cursor: pointer;
 
     backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+
+    white-space: nowrap;
 
     svg {
         color: #69c9c8;
+        flex-shrink: 0;
+    }
+
+    @media (max-width: 480px) {
+        height: 44px;
+        padding: 0 13px;
+        font-size: 12px;
+    }
+
+    @media (max-width: 400px) {
+        padding: 0 11px;
+        gap: 7px;
+    }
+
+    @media (max-width: 360px) {
+        height: 42px;
+        font-size: 11px;
     }
 `;
 
@@ -191,6 +299,20 @@ export const UserCard = styled.section`
         0 18px 40px rgba(0, 0, 0, 0.25);
 
     backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+
+    box-sizing: border-box;
+
+    @media (max-width: 480px) {
+        padding-left: 16px;
+        padding-right: 16px;
+        border-radius: 22px;
+    }
+
+    @media (max-width: 360px) {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
 `;
 
 export const UserRow = styled.div`
@@ -203,8 +325,20 @@ export const UserRow = styled.div`
 
     border-bottom: 1px solid #222c33;
 
+    min-width: 0;
+
     &:last-child {
         border-bottom: none;
+    }
+
+    @media (max-width: 480px) {
+        min-height: 72px;
+        gap: 12px;
+    }
+
+    @media (max-width: 360px) {
+        min-height: 68px;
+        gap: 10px;
     }
 `;
 
@@ -228,6 +362,26 @@ export const UserIcon = styled.div<{ $color: string }>`
         width: 25px;
         height: 25px;
     }
+
+    @media (max-width: 480px) {
+        width: 48px;
+        height: 48px;
+
+        svg {
+            width: 23px;
+            height: 23px;
+        }
+    }
+
+    @media (max-width: 360px) {
+        width: 44px;
+        height: 44px;
+
+        svg {
+            width: 21px;
+            height: 21px;
+        }
+    }
 `;
 
 export const UserData = styled.div`
@@ -245,6 +399,10 @@ export const UserLabel = styled.span`
     font-weight: 700;
 
     margin-bottom: 5px;
+
+    @media (max-width: 360px) {
+        font-size: 14px;
+    }
 `;
 
 export const UserValue = styled.span`
@@ -257,6 +415,12 @@ export const UserValue = styled.span`
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+
+    min-width: 0;
+
+    @media (max-width: 360px) {
+        font-size: 13px;
+    }
 `;
 
 export const Arrow = styled.div`
@@ -264,6 +428,8 @@ export const Arrow = styled.div`
 
     display: flex;
     align-items: center;
+
+    flex-shrink: 0;
 `;
 
 export const RoleBadge = styled.span`
@@ -281,6 +447,13 @@ export const RoleBadge = styled.span`
 
     font-size: 13px;
     font-weight: 700;
+
+    white-space: nowrap;
+
+    @media (max-width: 360px) {
+        padding: 4px 10px;
+        font-size: 12px;
+    }
 `;
 
 /* =========================
@@ -290,18 +463,50 @@ export const RoleBadge = styled.span`
 export const ScoreSection = styled.section`
     margin-top: 25px;
 
-    position: relative;
+    width: 100%;
 
-    display: flex;
-    justify-content: center;
+    display: grid;
+
+    grid-template-columns:
+        minmax(58px, 1fr)
+        minmax(210px, 270px)
+        minmax(58px, 1fr);
+
+    align-items: center;
+
+    gap: 4px;
+
+    box-sizing: border-box;
+
+    @media (max-width: 430px) {
+        grid-template-columns:
+            minmax(52px, 1fr)
+            minmax(205px, 245px)
+            minmax(52px, 1fr);
+
+        gap: 2px;
+    }
+
+    @media (max-width: 380px) {
+        grid-template-columns:
+            50px
+            minmax(195px, 1fr)
+            50px;
+    }
+
+    @media (max-width: 350px) {
+        grid-template-columns:
+            46px
+            minmax(180px, 1fr)
+            46px;
+
+        gap: 1px;
+    }
 `;
 
 export const ScoreSide = styled.div`
-    position: absolute;
-
-    top: 28px;
-
-    width: 105px;
+    width: 100%;
+    min-width: 0;
 
     display: flex;
     flex-direction: column;
@@ -313,14 +518,31 @@ export const ScoreSide = styled.div`
 
     font-size: 12px;
     line-height: 1.5;
+
+    box-sizing: border-box;
+
+    overflow-wrap: break-word;
+
+    @media (max-width: 430px) {
+        font-size: 11px;
+        line-height: 1.4;
+    }
+
+    @media (max-width: 380px) {
+        font-size: 10px;
+    }
+
+    @media (max-width: 350px) {
+        font-size: 9px;
+    }
 `;
 
 export const ScoreSideLeft = styled(ScoreSide)`
-    left: 0;
+    justify-self: stretch;
 `;
 
 export const ScoreSideRight = styled(ScoreSide)`
-    right: 0;
+    justify-self: stretch;
 `;
 
 export const ScoreIcon = styled.div<{ $color: string }>`
@@ -341,28 +563,64 @@ export const ScoreIcon = styled.div<{ $color: string }>`
 
     color: ${({ $color }) => $color};
 
+    flex-shrink: 0;
+
     svg {
         width: 27px;
         height: 27px;
     }
+
+    @media (max-width: 430px) {
+        width: 48px;
+        height: 48px;
+
+        margin-bottom: 8px;
+
+        svg {
+            width: 24px;
+            height: 24px;
+        }
+    }
+
+    @media (max-width: 380px) {
+        width: 44px;
+        height: 44px;
+
+        svg {
+            width: 22px;
+            height: 22px;
+        }
+    }
 `;
 
 export const ScoreContent = styled.div`
-    width: 270px;
-    height: 270px;
+    width: 100%;
+    height: clamp(215px, 68vw, 270px);
+
+    min-width: 0;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
     position: relative;
+
+    box-sizing: border-box;
+
+    overflow: visible;
 `;
 
 export const ScoreArc = styled.div`
     position: absolute;
 
-    width: 235px;
-    height: 235px;
+    width: calc(100% - 28px);
+    height: calc(100% - 28px);
+
+    max-width: 235px;
+    max-height: 235px;
+
+    min-width: 185px;
+    min-height: 185px;
 
     border-radius: 50%;
 
@@ -373,6 +631,19 @@ export const ScoreArc = styled.div`
     border-right-color: #91a7c5;
 
     transform: rotate(-25deg);
+
+    box-sizing: border-box;
+
+    @media (max-width: 380px) {
+        border-width: 6px;
+        min-width: 175px;
+        min-height: 175px;
+    }
+
+    @media (max-width: 350px) {
+        min-width: 165px;
+        min-height: 165px;
+    }
 `;
 
 export const ScoreCenter = styled.div`
@@ -382,6 +653,8 @@ export const ScoreCenter = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+
+    min-width: 0;
 `;
 
 export const ScoreLabel = styled.span`
@@ -391,12 +664,19 @@ export const ScoreLabel = styled.span`
     font-weight: 500;
 
     letter-spacing: 0.5px;
+
+    white-space: nowrap;
+
+    @media (max-width: 380px) {
+        font-size: 11px;
+    }
 `;
 
 export const ScoreNumber = styled.span`
     margin-top: 8px;
 
-    font-size: 82px;
+    font-size: clamp(68px, 18vw, 82px);
+
     line-height: 0.95;
 
     font-weight: 700;
@@ -404,6 +684,17 @@ export const ScoreNumber = styled.span`
     color: #e9e5d8;
 
     letter-spacing: -4px;
+
+    white-space: nowrap;
+
+    @media (max-width: 380px) {
+        font-size: 66px;
+        letter-spacing: -3px;
+    }
+
+    @media (max-width: 350px) {
+        font-size: 60px;
+    }
 `;
 
 export const ScorePoints = styled.span`
@@ -414,11 +705,19 @@ export const ScorePoints = styled.span`
     font-size: 13px;
 
     letter-spacing: 6px;
+
+    white-space: nowrap;
+
+    @media (max-width: 380px) {
+        font-size: 11px;
+        letter-spacing: 4px;
+    }
 `;
 
 export const ScoreMessage = styled.div`
-    margin: -10px auto 0;
+    margin: 18px auto 0;
 
+    width: 100%;
     max-width: 430px;
 
     min-height: 58px;
@@ -443,6 +742,16 @@ export const ScoreMessage = styled.div`
     line-height: 1.4;
 
     text-align: left;
+
+    @media (max-width: 480px) {
+        padding: 10px 14px;
+        font-size: 11px;
+    }
+
+    @media (max-width: 360px) {
+        font-size: 10px;
+        gap: 8px;
+    }
 `;
 
 export const Star = styled.div`
@@ -460,6 +769,11 @@ export const Star = styled.div`
     background: rgba(119, 160, 139, 0.15);
 
     color: #9cc4b3;
+
+    @media (max-width: 360px) {
+        width: 32px;
+        height: 32px;
+    }
 `;
 
 /* =========================
@@ -468,6 +782,10 @@ export const Star = styled.div`
 
 export const Section = styled.section`
     margin-top: 26px;
+
+    width: 100%;
+
+    min-width: 0;
 `;
 
 export const SectionHeader = styled.div`
@@ -475,7 +793,11 @@ export const SectionHeader = styled.div`
     align-items: center;
     justify-content: space-between;
 
+    gap: 12px;
+
     margin-bottom: 14px;
+
+    min-width: 0;
 `;
 
 export const SectionTitle = styled.h2`
@@ -486,6 +808,12 @@ export const SectionTitle = styled.h2`
     color: #f1f3f4;
 
     font-weight: 700;
+
+    min-width: 0;
+
+    @media (max-width: 360px) {
+        font-size: 18px;
+    }
 `;
 
 export const SeeAll = styled.button`
@@ -501,6 +829,14 @@ export const SeeAll = styled.button`
     font-size: 13px;
 
     cursor: pointer;
+
+    flex-shrink: 0;
+
+    padding: 4px 0;
+
+    @media (max-width: 360px) {
+        font-size: 12px;
+    }
 `;
 
 /* =========================
@@ -508,16 +844,31 @@ export const SeeAll = styled.button`
 ========================= */
 
 export const AreasGrid = styled.div`
+    width: 100%;
+
     display: grid;
 
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
 
     gap: 12px;
+
+    box-sizing: border-box;
+
+    @media (max-width: 400px) {
+        gap: 10px;
+    }
+
+    @media (max-width: 340px) {
+        grid-template-columns: 1fr;
+    }
 `;
 
-export const AreaCard = styled.button<{ $variant: "physical" | "philosophy" }>`
+export const AreaCard = styled.button<{
+    $variant: "physical" | "philosophy";
+}>`
     position: relative;
 
+    min-width: 0;
     min-height: 180px;
 
     overflow: hidden;
@@ -538,9 +889,24 @@ export const AreaCard = styled.button<{ $variant: "physical" | "philosophy" }>`
     text-align: left;
 
     cursor: pointer;
+
+    box-sizing: border-box;
+
+    @media (max-width: 480px) {
+        min-height: 175px;
+        padding: 14px;
+    }
+
+    @media (max-width: 400px) {
+        min-height: 165px;
+        padding: 12px;
+        border-radius: 16px;
+    }
 `;
 
-export const AreaIcon = styled.div<{ $variant: "physical" | "philosophy" }>`
+export const AreaIcon = styled.div<{
+    $variant: "physical" | "philosophy";
+}>`
     width: 44px;
     height: 44px;
 
@@ -560,12 +926,27 @@ export const AreaIcon = styled.div<{ $variant: "physical" | "philosophy" }>`
             ? "#9bc0ae"
             : "#91afd6"};
 
+    flex-shrink: 0;
+
     svg {
         width: 23px;
     }
+
+    @media (max-width: 400px) {
+        width: 40px;
+        height: 40px;
+
+        border-radius: 12px;
+
+        svg {
+            width: 21px;
+        }
+    }
 `;
 
-export const AreaTitle = styled.h3<{ $variant: "physical" | "philosophy" }>`
+export const AreaTitle = styled.h3<{
+    $variant: "physical" | "philosophy";
+}>`
     margin: 14px 0 6px;
 
     font-size: 15px;
@@ -574,6 +955,15 @@ export const AreaTitle = styled.h3<{ $variant: "physical" | "philosophy" }>`
         $variant === "physical"
             ? "#9bc0ae"
             : "#91afd6"};
+
+    line-height: 1.2;
+
+    max-width: 70%;
+
+    @media (max-width: 400px) {
+        font-size: 14px;
+        margin-top: 11px;
+    }
 `;
 
 export const AreaDescription = styled.p`
@@ -585,6 +975,14 @@ export const AreaDescription = styled.p`
 
     font-size: 12px;
     line-height: 1.5;
+
+    position: relative;
+    z-index: 2;
+
+    @media (max-width: 400px) {
+        font-size: 11px;
+        max-width: 125px;
+    }
 `;
 
 export const AreaImage = styled.img`
@@ -598,6 +996,13 @@ export const AreaImage = styled.img`
     max-height: 125px;
 
     object-fit: contain;
+
+    pointer-events: none;
+
+    @media (max-width: 400px) {
+        width: 53%;
+        max-height: 110px;
+    }
 `;
 
 export const AreaArrow = styled.div`
@@ -618,6 +1023,18 @@ export const AreaArrow = styled.div`
     background: #f3f4f4;
 
     color: #243139;
+
+    z-index: 3;
+
+    flex-shrink: 0;
+
+    @media (max-width: 400px) {
+        width: 34px;
+        height: 34px;
+
+        right: 8px;
+        bottom: 8px;
+    }
 `;
 
 /* =========================
@@ -625,14 +1042,31 @@ export const AreaArrow = styled.div`
 ========================= */
 
 export const ActionsGrid = styled.div`
+    width: 100%;
+
     display: grid;
 
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
 
     gap: 12px;
+
+    box-sizing: border-box;
+
+    @media (max-width: 400px) {
+        gap: 10px;
+    }
+
+    @media (max-width: 340px) {
+        grid-template-columns: 1fr;
+    }
 `;
 
-export const ActionCard = styled.button<{ $color: "green" | "blue" }>`
+export const ActionCard = styled.button<{
+    $color: "green" | "blue";
+}>`
+    width: 100%;
+
+    min-width: 0;
     min-height: 92px;
 
     padding: 14px;
@@ -640,7 +1074,7 @@ export const ActionCard = styled.button<{ $color: "green" | "blue" }>`
     display: flex;
     align-items: center;
 
-    gap: 12px;
+    gap: 10px;
 
     text-align: left;
 
@@ -653,9 +1087,27 @@ export const ActionCard = styled.button<{ $color: "green" | "blue" }>`
     color: #ffffff;
 
     cursor: pointer;
+
+    box-sizing: border-box;
+
+    overflow: hidden;
+
+    @media (max-width: 480px) {
+        padding: 12px;
+        gap: 8px;
+        min-height: 100px;
+    }
+
+    @media (max-width: 400px) {
+        min-height: 96px;
+        border-radius: 16px;
+        padding: 10px;
+    }
 `;
 
-export const ActionIcon = styled.div<{ $color: "green" | "blue" }>`
+export const ActionIcon = styled.div<{
+    $color: "green" | "blue";
+}>`
     flex-shrink: 0;
 
     width: 48px;
@@ -676,15 +1128,26 @@ export const ActionIcon = styled.div<{ $color: "green" | "blue" }>`
         $color === "green"
             ? "#a0c5b2"
             : "#9bb7db"};
+
+    @media (max-width: 400px) {
+        width: 42px;
+        height: 42px;
+
+        border-radius: 10px;
+    }
 `;
 
 export const ActionContent = styled.div`
     min-width: 0;
 
     flex: 1;
+
+    overflow: hidden;
 `;
 
-export const ActionTitle = styled.span<{ $color: "green" | "blue" }>`
+export const ActionTitle = styled.span<{
+    $color: "green" | "blue";
+}>`
     display: block;
 
     color: ${({ $color }) =>
@@ -696,6 +1159,14 @@ export const ActionTitle = styled.span<{ $color: "green" | "blue" }>`
     font-weight: 700;
 
     margin-bottom: 5px;
+
+    line-height: 1.25;
+
+    overflow-wrap: break-word;
+
+    @media (max-width: 400px) {
+        font-size: 12px;
+    }
 `;
 
 export const ActionDescription = styled.span`
@@ -705,10 +1176,22 @@ export const ActionDescription = styled.span`
 
     font-size: 11px;
     line-height: 1.4;
+
+    overflow-wrap: break-word;
+
+    @media (max-width: 400px) {
+        font-size: 10px;
+    }
 `;
 
 export const ActionArrow = styled.div`
     color: #e8edef;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
 `;
 
 /* =========================
@@ -720,7 +1203,7 @@ export const BottomNav = styled.nav`
 
     left: 50%;
 
-    bottom: 12px;
+    bottom: max(12px, env(safe-area-inset-bottom));
 
     transform: translateX(-50%);
 
@@ -728,11 +1211,12 @@ export const BottomNav = styled.nav`
 
     max-width: 680px;
 
-    height: 72px;
+    min-height: 72px;
+    height: auto;
 
     display: grid;
 
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(4, minmax(0, 1fr));
 
     align-items: center;
 
@@ -746,11 +1230,34 @@ export const BottomNav = styled.nav`
         0 15px 40px rgba(0, 0, 0, 0.35);
 
     backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
 
     z-index: 50;
+
+    box-sizing: border-box;
+
+    padding: 4px 6px;
+
+    @media (max-width: 480px) {
+        width: calc(100% - 24px);
+        min-height: 70px;
+        border-radius: 28px;
+    }
+
+    @media (max-width: 380px) {
+        width: calc(100% - 18px);
+        min-height: 66px;
+        border-radius: 26px;
+        padding: 3px 4px;
+    }
 `;
 
-export const NavItem = styled.button<{ $active?: boolean }>`
+export const NavItem = styled.button<{
+    $active?: boolean;
+}>`
+    width: 100%;
+    min-width: 0;
+
     height: 100%;
 
     border: none;
@@ -771,8 +1278,27 @@ export const NavItem = styled.button<{ $active?: boolean }>`
 
     cursor: pointer;
 
+    padding: 5px 2px;
+
+    box-sizing: border-box;
+
+    white-space: nowrap;
+
     svg {
         width: 22px;
         height: 22px;
+
+        flex-shrink: 0;
+    }
+
+    @media (max-width: 380px) {
+        font-size: 10px;
+
+        gap: 3px;
+
+        svg {
+            width: 20px;
+            height: 20px;
+        }
     }
 `;
