@@ -81,17 +81,26 @@ export const DisciplineAreaCard = styled.button<{
     position: relative;
 
     width: 100%;
-    height: clamp(270px, 55vw, 325px);
+
+    /*
+     * IMPORTANTE:
+     * Las imágenes son panorámicas ~2:1.
+     * El card conserva esa proporción.
+     */
+    aspect-ratio: 2 / 1;
+    min-height: 0;
+    height: auto;
 
     margin: 0 0 18px;
-    padding: clamp(20px, 4vw, 30px);
+
+    padding: clamp(16px, 4vw, 28px);
 
     display: block;
 
     box-sizing: border-box;
     overflow: hidden;
 
-    border-radius: clamp(22px, 4vw, 28px);
+    border-radius: clamp(20px, 4vw, 28px);
     border: 1px solid #263740;
 
     cursor: pointer;
@@ -114,44 +123,25 @@ export const DisciplineAreaCard = styled.button<{
 
         pointer-events: none;
 
-        background:
-            linear-gradient(
-                90deg,
-                rgba(7, 20, 18, 0.98) 0%,
-                rgba(7, 20, 18, 0.90) 30%,
-                rgba(7, 20, 18, 0.55) 52%,
-                rgba(7, 20, 18, 0.12) 78%,
-                rgba(7, 20, 18, 0) 100%
-            );
+        background: linear-gradient(
+            90deg,
+            rgba(7, 20, 18, 0.88) 0%,
+            rgba(7, 20, 18, 0.65) 30%,
+            rgba(7, 20, 18, 0.20) 55%,
+            rgba(7, 20, 18, 0) 75%
+        );
     }
 
     &[data-discipline="boxing"]::after {
-        background:
-            linear-gradient(
-                90deg,
-                rgba(8, 18, 31, 0.98) 0%,
-                rgba(8, 18, 31, 0.90) 30%,
-                rgba(8, 18, 31, 0.55) 52%,
-                rgba(8, 18, 31, 0.12) 78%,
-                rgba(8, 18, 31, 0) 100%
-            );
-    }
-
-    @media (max-width: 600px) {
-        height: 280px;
-    }
-
-    @media (max-width: 400px) {
-        height: 265px;
-        padding: 20px;
-    }
-
-    @media (max-width: 360px) {
-        height: 250px;
-        padding: 18px;
+        background: linear-gradient(
+            90deg,
+            rgba(8, 18, 31, 0.88) 0%,
+            rgba(8, 18, 31, 0.65) 30%,
+            rgba(8, 18, 31, 0.20) 55%,
+            rgba(8, 18, 31, 0) 75%
+        );
     }
 `;
-
 
 /* =========================================
    IMAGEN
@@ -167,36 +157,12 @@ export const DisciplineAreaImage = styled.img`
 
     display: block;
 
-    /*
-     * La imagen ocupa TODO el card.
-     * No limitarla al 66% porque eso recorta
-     * la composición original.
-     */
     object-fit: cover;
-    object-position: center center;
+    object-position: center;
 
     z-index: 0;
 
     pointer-events: none;
-
-    /*
-     * Suavizamos la transición hacia el texto.
-     */
-    mask-image:
-        linear-gradient(
-            90deg,
-            rgba(0, 0, 0, 0.35) 0%,
-            black 25%,
-            black 100%
-        );
-
-    -webkit-mask-image:
-        linear-gradient(
-            90deg,
-            rgba(0, 0, 0, 0.35) 0%,
-            black 25%,
-            black 100%
-        );
 `;
 
 /* =========================================
@@ -209,32 +175,30 @@ export const DisciplineAreaIcon = styled.div<{
     position: relative;
     z-index: 3;
 
-    width: clamp(76px, 20vw, 110px);
-    height: clamp(76px, 20vw, 100px);
+    width: clamp(48px, 12vw, 72px);
+    height: clamp(48px, 12vw, 72px);
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    margin-bottom: clamp(12px, 3vw, 20px);
+    margin-bottom: clamp(8px, 2vw, 14px);
 
-    border-radius: clamp(18px, 4vw, 24px);
+    border-radius: clamp(14px, 3vw, 20px);
 
     background: ${({ $variant }) =>
         $variant === "physical"
-            ? "rgba(55, 112, 94, 0.48)"
-            : "rgba(46, 71, 108, 0.55)"};
+            ? "rgba(55, 112, 94, 0.58)"
+            : "rgba(46, 71, 108, 0.65)"};
 
     color: ${({ $variant }) =>
         $variant === "physical"
             ? "#86d8b6"
             : "#9b9aff"};
 
-    flex-shrink: 0;
-
     svg {
-        width: clamp(40px, 10vw, 56px);
-        height: clamp(40px, 10vw, 56px);
+        width: clamp(27px, 7vw, 40px);
+        height: clamp(27px, 7vw, 40px);
     }
 `;
 
@@ -248,43 +212,23 @@ export const DisciplineAreaTitle = styled.h2<{
     position: relative;
     z-index: 3;
 
-    margin: 0 0 8px;
+    width: 50%;
+    max-width: 250px;
 
-    /*
-     * El texto nunca invade la zona principal
-     * de la fotografía.
-     */
-    width: 52%;
-    max-width: 260px;
+    margin: 0 0 5px;
 
     font-family: "Times New Roman", serif;
 
-    font-size: clamp(28px, 6vw, 40px);
+    font-size: clamp(22px, 5vw, 34px);
+    line-height: 1;
 
-    line-height: 1.05;
     font-weight: 700;
 
     color: #f4f2ed;
 
-    overflow-wrap: break-word;
+    white-space: nowrap;
 
-    text-shadow:
-        0 2px 8px rgba(0, 0, 0, 0.45);
-
-    @media (max-width: 600px) {
-        width: 55%;
-        font-size: 32px;
-    }
-
-    @media (max-width: 400px) {
-        width: 58%;
-        font-size: 29px;
-    }
-
-    @media (max-width: 360px) {
-        width: 60%;
-        font-size: 27px;
-    }
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
 `;
 
 /* =========================================
@@ -295,66 +239,44 @@ export const DisciplineAreaDescription = styled.p`
     position: relative;
     z-index: 3;
 
-    margin: 0;
+    width: 48%;
+    max-width: 240px;
 
-    width: 52%;
-    max-width: 270px;
+    margin: 0;
 
     font-family: "Times New Roman", serif;
 
-    font-size: clamp(18px, 4.5vw, 27px);
-
+    font-size: clamp(14px, 3.5vw, 21px);
     line-height: 1.25;
 
     color: #b9c8c9;
 
-    overflow-wrap: break-word;
-
-    text-shadow:
-        0 2px 8px rgba(0, 0, 0, 0.5);
-
-    @media (max-width: 600px) {
-        width: 55%;
-        font-size: 21px;
-    }
-
-    @media (max-width: 400px) {
-        width: 58%;
-        font-size: 19px;
-    }
-
-    @media (max-width: 360px) {
-        width: 60%;
-        font-size: 17px;
-    }
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
 `;
 
 export const DisciplineAreaArrow = styled(AreaArrow)`
+    position: absolute;
+
     z-index: 4;
 
-    width: clamp(54px, 15vw, 74px);
-    height: clamp(54px, 15vw, 74px);
+    width: clamp(42px, 11vw, 62px);
+    height: clamp(42px, 11vw, 62px);
 
-    right: clamp(16px, 4vw, 28px);
-    bottom: clamp(16px, 4vw, 25px);
+    right: clamp(10px, 3vw, 22px);
+    bottom: clamp(10px, 3vw, 20px);
 
     border-radius: 50%;
 
     background: #f5f5f3;
-
     color: #17252e;
 
-    box-shadow:
-        0 4px 12px rgba(0, 0, 0, 0.25);
-
     display: flex;
-
     align-items: center;
     justify-content: center;
 
     svg {
-        width: clamp(26px, 7vw, 34px);
-        height: clamp(26px, 7vw, 34px);
+        width: clamp(21px, 5vw, 30px);
+        height: clamp(21px, 5vw, 30px);
     }
 `;
 
