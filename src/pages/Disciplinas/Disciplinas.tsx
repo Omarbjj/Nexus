@@ -33,6 +33,7 @@ import {
     ChartBar,
     ChartLabel,
     Chart,
+    StatisticPercentage,
 } from "./Disciplinas.styles";
 import { Activity, ArrowLeft, ArrowRight, CalendarPlus, User, Users } from "lucide-react";
 import jiuJitsuImage from "../../assets/jiu-jitsu.png";
@@ -216,9 +217,7 @@ function Disciplinas () {
                     </DisciplineAreaTitle>
 
                     <DisciplineAreaDescription>
-                        Disciplina, técnica
-                        <br />
-                        y control.
+                        Disciplina, técnica y control.
                     </DisciplineAreaDescription>
 
                     <DisciplineAreaImage
@@ -249,9 +248,7 @@ function Disciplinas () {
                     </DisciplineAreaTitle>
 
                     <DisciplineAreaDescription>
-                        Fuerza, disciplina
-                        <br />
-                        y superación.
+                        Fuerza, disciplina y superación.
                     </DisciplineAreaDescription>
 
                     <DisciplineAreaImage
@@ -331,9 +328,9 @@ function Disciplinas () {
                                     {asistencias}
                                 </StatisticValue>
 
-                                <span>
+                                <StatisticPercentage>
                                     {porcentajeAsistencia}%
-                                </span>
+                                </StatisticPercentage>
 
                             </Statistic>
 
@@ -354,9 +351,9 @@ function Disciplinas () {
                                     {inasistencias}
                                 </StatisticValue>
 
-                                <span>
+                                <StatisticPercentage>
                                     {porcentajeInasistencia}%
-                                </span>
+                                </StatisticPercentage>
 
                             </Statistic>
 

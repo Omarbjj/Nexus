@@ -81,27 +81,20 @@ export const DisciplineAreaCard = styled.button<{
     position: relative;
 
     width: 100%;
-
-    /*
-     * La altura se adapta al ancho de pantalla.
-     * Nunca será menor de 260px ni mayor de 325px.
-     */
-    height: clamp(260px, 70vw, 325px);
+    height: clamp(270px, 55vw, 325px);
 
     margin: 0 0 18px;
-    padding: clamp(20px, 5vw, 32px);
+    padding: clamp(20px, 4vw, 30px);
 
     display: block;
 
+    box-sizing: border-box;
     overflow: hidden;
 
-    box-sizing: border-box;
-
-    border-radius: clamp(22px, 5vw, 28px);
+    border-radius: clamp(22px, 4vw, 28px);
     border: 1px solid #263740;
 
     cursor: pointer;
-
     text-align: left;
 
     color: #ffffff;
@@ -115,7 +108,6 @@ export const DisciplineAreaCard = styled.button<{
         content: "";
 
         position: absolute;
-
         inset: 0;
 
         z-index: 1;
@@ -126,9 +118,9 @@ export const DisciplineAreaCard = styled.button<{
             linear-gradient(
                 90deg,
                 rgba(7, 20, 18, 0.98) 0%,
-                rgba(7, 20, 18, 0.90) 27%,
-                rgba(7, 20, 18, 0.58) 48%,
-                rgba(7, 20, 18, 0.15) 72%,
+                rgba(7, 20, 18, 0.90) 30%,
+                rgba(7, 20, 18, 0.55) 52%,
+                rgba(7, 20, 18, 0.12) 78%,
                 rgba(7, 20, 18, 0) 100%
             );
     }
@@ -138,25 +130,25 @@ export const DisciplineAreaCard = styled.button<{
             linear-gradient(
                 90deg,
                 rgba(8, 18, 31, 0.98) 0%,
-                rgba(8, 18, 31, 0.90) 27%,
-                rgba(8, 18, 31, 0.58) 48%,
-                rgba(8, 18, 31, 0.15) 72%,
+                rgba(8, 18, 31, 0.90) 30%,
+                rgba(8, 18, 31, 0.55) 52%,
+                rgba(8, 18, 31, 0.12) 78%,
                 rgba(8, 18, 31, 0) 100%
             );
     }
 
-    @media (max-width: 400px) {
-        height: 270px;
+    @media (max-width: 600px) {
+        height: 280px;
+    }
 
+    @media (max-width: 400px) {
+        height: 265px;
         padding: 20px;
     }
 
     @media (max-width: 360px) {
         height: 250px;
-
         padding: 18px;
-
-        border-radius: 20px;
     }
 `;
 
@@ -172,11 +164,10 @@ export const DisciplineAreaImage = styled.img`
     right: 0;
     bottom: 0;
 
-    width: 67%;
+    width: 66%;
     height: 100%;
 
     object-fit: cover;
-
     object-position: center;
 
     display: block;
@@ -189,8 +180,8 @@ export const DisciplineAreaImage = styled.img`
         linear-gradient(
             90deg,
             transparent 0%,
-            rgba(0, 0, 0, 0.35) 12%,
-            black 32%,
+            rgba(0, 0, 0, 0.25) 15%,
+            black 35%,
             black 100%
         );
 
@@ -198,13 +189,13 @@ export const DisciplineAreaImage = styled.img`
         linear-gradient(
             90deg,
             transparent 0%,
-            rgba(0, 0, 0, 0.35) 12%,
-            black 32%,
+            rgba(0, 0, 0, 0.25) 15%,
+            black 35%,
             black 100%
         );
 
     @media (max-width: 400px) {
-        width: 65%;
+        width: 64%;
     }
 
     @media (max-width: 360px) {
@@ -221,18 +212,16 @@ export const DisciplineAreaIcon = styled.div<{
     $variant: "physical" | "philosophy";
 }>`
     position: relative;
-
     z-index: 3;
 
-    width: clamp(76px, 22vw, 112px);
-    height: clamp(72px, 20vw, 100px);
+    width: clamp(76px, 20vw, 110px);
+    height: clamp(76px, 20vw, 100px);
 
     display: flex;
-
     align-items: center;
     justify-content: center;
 
-    margin-bottom: clamp(12px, 3vw, 22px);
+    margin-bottom: clamp(12px, 3vw, 20px);
 
     border-radius: clamp(18px, 4vw, 24px);
 
@@ -246,9 +235,11 @@ export const DisciplineAreaIcon = styled.div<{
             ? "#86d8b6"
             : "#9b9aff"};
 
+    flex-shrink: 0;
+
     svg {
-        width: clamp(42px, 12vw, 58px);
-        height: clamp(42px, 12vw, 58px);
+        width: clamp(40px, 10vw, 56px);
+        height: clamp(40px, 10vw, 56px);
     }
 `;
 
@@ -260,39 +251,43 @@ export const DisciplineAreaTitle = styled.h2<{
     $variant: "physical" | "philosophy";
 }>`
     position: relative;
-
     z-index: 3;
 
     margin: 0 0 8px;
 
-    max-width: 55%;
+    /*
+     * El texto nunca invade la zona principal
+     * de la fotografía.
+     */
+    width: 52%;
+    max-width: 260px;
 
     font-family: "Times New Roman", serif;
 
-    font-size: clamp(28px, 8vw, 40px);
+    font-size: clamp(28px, 6vw, 40px);
 
-    line-height: 1;
-
+    line-height: 1.05;
     font-weight: 700;
 
     color: #f4f2ed;
 
     overflow-wrap: break-word;
 
-    word-break: normal;
-
     text-shadow:
         0 2px 8px rgba(0, 0, 0, 0.45);
 
-    @media (max-width: 400px) {
-        max-width: 60%;
+    @media (max-width: 600px) {
+        width: 55%;
+        font-size: 32px;
+    }
 
-        font-size: 30px;
+    @media (max-width: 400px) {
+        width: 58%;
+        font-size: 29px;
     }
 
     @media (max-width: 360px) {
-        max-width: 62%;
-
+        width: 60%;
         font-size: 27px;
     }
 `;
@@ -303,16 +298,16 @@ export const DisciplineAreaTitle = styled.h2<{
 
 export const DisciplineAreaDescription = styled.p`
     position: relative;
-
     z-index: 3;
 
     margin: 0;
 
-    max-width: 52%;
+    width: 52%;
+    max-width: 270px;
 
     font-family: "Times New Roman", serif;
 
-    font-size: clamp(18px, 5vw, 27px);
+    font-size: clamp(18px, 4.5vw, 27px);
 
     line-height: 1.25;
 
@@ -320,22 +315,21 @@ export const DisciplineAreaDescription = styled.p`
 
     overflow-wrap: break-word;
 
-    word-break: normal;
-
     text-shadow:
         0 2px 8px rgba(0, 0, 0, 0.5);
 
+    @media (max-width: 600px) {
+        width: 55%;
+        font-size: 21px;
+    }
+
     @media (max-width: 400px) {
-        max-width: 58%;
-
+        width: 58%;
         font-size: 19px;
-
-        line-height: 1.3;
     }
 
     @media (max-width: 360px) {
-        max-width: 60%;
-
+        width: 60%;
         font-size: 17px;
     }
 `;
@@ -374,11 +368,15 @@ export const DisciplineAreaArrow = styled(AreaArrow)`
 ========================================= */
 
 export const AttendanceCard = styled.div`
-    margin-top: 28px;
+    width: 100%;
 
-    padding: 24px 20px;
+    margin-top: 10px;
 
-    border-radius: 28px;
+    padding: clamp(20px, 4vw, 28px);
+
+    box-sizing: border-box;
+
+    border-radius: clamp(22px, 5vw, 28px);
 
     border: 1px solid #23343c;
 
@@ -386,6 +384,8 @@ export const AttendanceCard = styled.div`
 
     box-shadow:
         0 12px 30px rgba(0, 0, 0, 0.22);
+
+    overflow: hidden;
 `;
 
 export const AttendanceHeader = styled.div`
@@ -427,13 +427,23 @@ export const AttendancePeriod = styled.button`
 ========================================= */
 
 export const AttendanceContent = styled.div`
-    display: flex;
+    display: grid;
+
+    grid-template-columns:
+        minmax(145px, 1fr)
+        minmax(180px, 1fr);
 
     align-items: center;
 
     gap: 18px;
 
     margin-top: 22px;
+
+    @media (max-width: 600px) {
+        grid-template-columns: 1fr;
+
+        gap: 20px;
+    }
 `;
 
 export const DonutWrapper = styled.div`
@@ -523,18 +533,25 @@ export const Statistics = styled.div`
 `;
 
 export const Statistic = styled.div`
+    width: 100%;
+
     display: grid;
 
     grid-template-columns:
         12px
         minmax(0, 1fr)
+        auto
         auto;
 
     align-items: center;
 
-    column-gap: 8px;
+    column-gap: 10px;
 
-    padding: 14px;
+    padding: 12px 14px;
+
+    box-sizing: border-box;
+
+    min-width: 0;
 
     border-radius: 16px;
 
@@ -542,9 +559,19 @@ export const Statistic = styled.div`
 
     border: 1px solid #1d3038;
 
-    font-size: 12px;
-
     color: #aeb8bc;
+
+    @media (max-width: 400px) {
+        grid-template-columns:
+            10px
+            minmax(0, 1fr)
+            auto
+            auto;
+
+        column-gap: 7px;
+
+        padding: 11px 10px;
+    }
 `;
 
 export const StatisticIndicator = styled.span<{
@@ -553,16 +580,31 @@ export const StatisticIndicator = styled.span<{
     width: 11px;
     height: 11px;
 
+    flex-shrink: 0;
+
     border-radius: 50%;
 
     background: ${({ $type }) =>
         $type === "attendance"
             ? "#68cda8"
             : "#ff5963"};
+
+    @media (max-width: 400px) {
+        width: 10px;
+        height: 10px;
+    }
 `;
 
 export const StatisticLabel = styled.span`
-    font-size: 13px;
+    min-width: 0;
+
+    overflow: hidden;
+
+    white-space: nowrap;
+
+    text-overflow: ellipsis;
+
+    font-size: clamp(12px, 3.2vw, 14px);
 
     color: #d4dbdd;
 `;
@@ -570,9 +612,15 @@ export const StatisticLabel = styled.span`
 export const StatisticValue = styled.strong<{
     $type?: "absence";
 }>`
+    min-width: 28px;
+
+    text-align: right;
+
     font-family: "Times New Roman", serif;
 
-    font-size: 25px;
+    font-size: clamp(20px, 5vw, 25px);
+
+    line-height: 1;
 
     color: ${({ $type }) =>
         $type === "absence"
@@ -580,6 +628,17 @@ export const StatisticValue = styled.strong<{
             : "#68cda8"};
 `;
 
+export const StatisticPercentage = styled.span`
+    min-width: 38px;
+
+    text-align: right;
+
+    font-size: clamp(12px, 3.5vw, 15px);
+
+    line-height: 1;
+
+    color: #c5ced1;
+`;
 
 /* =========================================
    GRÁFICA
