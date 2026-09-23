@@ -29,25 +29,33 @@ export const BackButton = styled.button`
 export const DisciplineTitle = styled.h1`
     margin: 0;
 
+    max-width: 100%;
+
     font-family: "Times New Roman", serif;
 
-    font-size: 40px;
+    font-size: clamp(34px, 8vw, 48px);
 
-    line-height: 1.05;
+    line-height: 1.02;
 
     color: #f4f2ed;
+
+    overflow-wrap: break-word;
 `;
 
 export const DisciplineSubtitle = styled.p`
-    margin: 12px 0 0;
+    margin: 14px 0 0;
+
+    max-width: 100%;
 
     font-family: "Times New Roman", serif;
 
-    font-size: 20px;
+    font-size: clamp(18px, 4.8vw, 24px);
 
-    line-height: 1.4;
+    line-height: 1.35;
 
     color: #aeb9be;
+
+    overflow-wrap: break-word;
 `;
 
 /* =========================================
@@ -73,10 +81,15 @@ export const DisciplineAreaCard = styled.button<{
     position: relative;
 
     width: 100%;
-    height: 325px;
+
+    /*
+     * La altura se adapta al ancho de pantalla.
+     * Nunca será menor de 260px ni mayor de 325px.
+     */
+    height: clamp(260px, 70vw, 325px);
 
     margin: 0 0 18px;
-    padding: 28px 32px;
+    padding: clamp(20px, 5vw, 32px);
 
     display: block;
 
@@ -84,7 +97,7 @@ export const DisciplineAreaCard = styled.button<{
 
     box-sizing: border-box;
 
-    border-radius: 28px;
+    border-radius: clamp(22px, 5vw, 28px);
     border: 1px solid #263740;
 
     cursor: pointer;
@@ -98,14 +111,11 @@ export const DisciplineAreaCard = styled.button<{
             ? "#0d211e"
             : "#0d1928"};
 
-    /*
-     * Capa oscura para mezclar la fotografía
-     * con el fondo de la tarjeta.
-     */
     &::after {
         content: "";
 
         position: absolute;
+
         inset: 0;
 
         z-index: 1;
@@ -116,9 +126,9 @@ export const DisciplineAreaCard = styled.button<{
             linear-gradient(
                 90deg,
                 rgba(7, 20, 18, 0.98) 0%,
-                rgba(7, 20, 18, 0.90) 25%,
-                rgba(7, 20, 18, 0.55) 48%,
-                rgba(7, 20, 18, 0.08) 78%,
+                rgba(7, 20, 18, 0.90) 27%,
+                rgba(7, 20, 18, 0.58) 48%,
+                rgba(7, 20, 18, 0.15) 72%,
                 rgba(7, 20, 18, 0) 100%
             );
     }
@@ -128,27 +138,25 @@ export const DisciplineAreaCard = styled.button<{
             linear-gradient(
                 90deg,
                 rgba(8, 18, 31, 0.98) 0%,
-                rgba(8, 18, 31, 0.90) 25%,
-                rgba(8, 18, 31, 0.55) 48%,
-                rgba(8, 18, 31, 0.08) 78%,
+                rgba(8, 18, 31, 0.90) 27%,
+                rgba(8, 18, 31, 0.58) 48%,
+                rgba(8, 18, 31, 0.15) 72%,
                 rgba(8, 18, 31, 0) 100%
             );
     }
 
-    @media (max-width: 480px) {
-        height: 325px;
+    @media (max-width: 400px) {
+        height: 270px;
 
-        padding: 28px 30px;
-
-        border-radius: 27px;
+        padding: 20px;
     }
 
-    @media (max-width: 400px) {
-        height: 290px;
+    @media (max-width: 360px) {
+        height: 250px;
 
-        padding: 22px 24px;
+        padding: 18px;
 
-        border-radius: 24px;
+        border-radius: 20px;
     }
 `;
 
@@ -162,6 +170,7 @@ export const DisciplineAreaImage = styled.img`
 
     top: 0;
     right: 0;
+    bottom: 0;
 
     width: 67%;
     height: 100%;
@@ -170,21 +179,17 @@ export const DisciplineAreaImage = styled.img`
 
     object-position: center;
 
+    display: block;
+
     z-index: 0;
 
     pointer-events: none;
 
-    display: block;
-
-    /*
-     * Hace que la fotografía desaparezca
-     * progresivamente hacia el lado izquierdo.
-     */
     mask-image:
         linear-gradient(
             90deg,
             transparent 0%,
-            rgba(0, 0, 0, 0.25) 10%,
+            rgba(0, 0, 0, 0.35) 12%,
             black 32%,
             black 100%
         );
@@ -193,17 +198,17 @@ export const DisciplineAreaImage = styled.img`
         linear-gradient(
             90deg,
             transparent 0%,
-            rgba(0, 0, 0, 0.25) 10%,
+            rgba(0, 0, 0, 0.35) 12%,
             black 32%,
             black 100%
         );
 
-    @media (max-width: 480px) {
-        width: 68%;
+    @media (max-width: 400px) {
+        width: 65%;
     }
 
-    @media (max-width: 400px) {
-        width: 70%;
+    @media (max-width: 360px) {
+        width: 62%;
     }
 `;
 
@@ -219,16 +224,17 @@ export const DisciplineAreaIcon = styled.div<{
 
     z-index: 3;
 
-    width: 112px;
-    height: 100px;
+    width: clamp(76px, 22vw, 112px);
+    height: clamp(72px, 20vw, 100px);
 
     display: flex;
+
     align-items: center;
     justify-content: center;
 
-    margin-bottom: 22px;
+    margin-bottom: clamp(12px, 3vw, 22px);
 
-    border-radius: 24px;
+    border-radius: clamp(18px, 4vw, 24px);
 
     background: ${({ $variant }) =>
         $variant === "physical"
@@ -241,33 +247,10 @@ export const DisciplineAreaIcon = styled.div<{
             : "#9b9aff"};
 
     svg {
-        width: 58px;
-        height: 58px;
-    }
-
-    @media (max-width: 480px) {
-        width: 108px;
-        height: 96px;
-
-        svg {
-            width: 56px;
-            height: 56px;
-        }
-    }
-
-    @media (max-width: 400px) {
-        width: 90px;
-        height: 82px;
-
-        border-radius: 20px;
-
-        svg {
-            width: 48px;
-            height: 48px;
-        }
+        width: clamp(42px, 12vw, 58px);
+        height: clamp(42px, 12vw, 58px);
     }
 `;
-
 
 /* =========================================
    TÍTULO
@@ -280,29 +263,39 @@ export const DisciplineAreaTitle = styled.h2<{
 
     z-index: 3;
 
-    margin: 0 0 10px;
+    margin: 0 0 8px;
+
+    max-width: 55%;
 
     font-family: "Times New Roman", serif;
 
-    font-size: 40px;
+    font-size: clamp(28px, 8vw, 40px);
+
     line-height: 1;
 
     font-weight: 700;
 
     color: #f4f2ed;
 
+    overflow-wrap: break-word;
+
+    word-break: normal;
+
     text-shadow:
         0 2px 8px rgba(0, 0, 0, 0.45);
 
-    @media (max-width: 480px) {
-        font-size: 39px;
+    @media (max-width: 400px) {
+        max-width: 60%;
+
+        font-size: 30px;
     }
 
-    @media (max-width: 400px) {
-        font-size: 34px;
+    @media (max-width: 360px) {
+        max-width: 62%;
+
+        font-size: 27px;
     }
 `;
-
 
 /* =========================================
    DESCRIPCIÓN
@@ -315,35 +308,46 @@ export const DisciplineAreaDescription = styled.p`
 
     margin: 0;
 
-    max-width: 290px;
+    max-width: 52%;
 
     font-family: "Times New Roman", serif;
 
-    font-size: 27px;
-    line-height: 1.35;
+    font-size: clamp(18px, 5vw, 27px);
+
+    line-height: 1.25;
 
     color: #b9c8c9;
+
+    overflow-wrap: break-word;
+
+    word-break: normal;
 
     text-shadow:
         0 2px 8px rgba(0, 0, 0, 0.5);
 
-    @media (max-width: 480px) {
-        font-size: 25px;
+    @media (max-width: 400px) {
+        max-width: 58%;
+
+        font-size: 19px;
+
+        line-height: 1.3;
     }
 
-    @media (max-width: 400px) {
-        font-size: 21px;
+    @media (max-width: 360px) {
+        max-width: 60%;
+
+        font-size: 17px;
     }
 `;
 
 export const DisciplineAreaArrow = styled(AreaArrow)`
     z-index: 4;
 
-    width: 74px;
-    height: 74px;
+    width: clamp(54px, 15vw, 74px);
+    height: clamp(54px, 15vw, 74px);
 
-    right: 28px;
-    bottom: 25px;
+    right: clamp(16px, 4vw, 28px);
+    bottom: clamp(16px, 4vw, 25px);
 
     border-radius: 50%;
 
@@ -354,30 +358,14 @@ export const DisciplineAreaArrow = styled(AreaArrow)`
     box-shadow:
         0 4px 12px rgba(0, 0, 0, 0.25);
 
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
     svg {
-        width: 34px;
-        height: 34px;
-    }
-
-    @media (max-width: 480px) {
-        width: 70px;
-        height: 70px;
-
-        right: 25px;
-        bottom: 23px;
-    }
-
-    @media (max-width: 400px) {
-        width: 58px;
-        height: 58px;
-
-        right: 18px;
-        bottom: 18px;
-
-        svg {
-            width: 28px;
-            height: 28px;
-        }
+        width: clamp(26px, 7vw, 34px);
+        height: clamp(26px, 7vw, 34px);
     }
 `;
 
