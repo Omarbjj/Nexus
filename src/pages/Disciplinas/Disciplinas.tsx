@@ -273,7 +273,6 @@ function Disciplinas () {
 
                         <AttendancePeriod>
                             Últimos 6 meses
-                            <span>⌄</span>
                         </AttendancePeriod>
 
                     </AttendanceHeader>

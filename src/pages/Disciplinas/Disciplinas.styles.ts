@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { AreaArrow } from "../Home/Home.styles";
 
 export const DisciplineHeader = styled.div`
-    margin-bottom: 30px;
+    margin-bottom: clamp(20px, 5vw, 30px);
 `;
 
 export const BackButton = styled.button`
@@ -33,9 +33,13 @@ export const DisciplineTitle = styled.h1`
 
     font-family: "Times New Roman", serif;
 
-    font-size: clamp(34px, 8vw, 48px);
+    /*
+     * Desktop: hasta 40px
+     * Mobile: aproximadamente 28-32px
+     */
+    font-size: clamp(28px, 6.5vw, 40px);
 
-    line-height: 1.02;
+    line-height: 1.05;
 
     color: #f4f2ed;
 
@@ -43,13 +47,13 @@ export const DisciplineTitle = styled.h1`
 `;
 
 export const DisciplineSubtitle = styled.p`
-    margin: 14px 0 0;
+    margin: 10px 0 0;
 
     max-width: 100%;
 
     font-family: "Times New Roman", serif;
 
-    font-size: clamp(18px, 4.8vw, 24px);
+    font-size: clamp(16px, 4vw, 21px);
 
     line-height: 1.35;
 
@@ -320,9 +324,13 @@ export const AttendanceTitle = styled.h2`
 
     font-family: "Times New Roman", serif;
 
-    font-size: 30px;
+    font-size: clamp(25px, 6vw, 32px);
+
+    line-height: 1.05;
 
     color: #f4f2ed;
+
+    max-width: 55%;
 `;
 
 export const AttendancePeriod = styled.button`
@@ -570,11 +578,13 @@ export const ChartSection = styled.div`
 `;
 
 export const ChartTitle = styled.h3`
-    margin: 0 0 20px;
+    margin: 0 0 18px;
 
     font-family: "Times New Roman", serif;
 
-    font-size: 21px;
+    font-size: clamp(18px, 4.5vw, 22px);
+
+    line-height: 1.15;
 
     color: #eeeae3;
 `;
