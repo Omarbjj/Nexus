@@ -160,49 +160,44 @@ export const DisciplineAreaCard = styled.button<{
 export const DisciplineAreaImage = styled.img`
     position: absolute;
 
-    top: 0;
-    right: 0;
-    bottom: 0;
+    inset: 0;
 
-    width: 66%;
+    width: 100%;
     height: 100%;
 
-    object-fit: cover;
-    object-position: center;
-
     display: block;
+
+    /*
+     * La imagen ocupa TODO el card.
+     * No limitarla al 66% porque eso recorta
+     * la composición original.
+     */
+    object-fit: cover;
+    object-position: center center;
 
     z-index: 0;
 
     pointer-events: none;
 
+    /*
+     * Suavizamos la transición hacia el texto.
+     */
     mask-image:
         linear-gradient(
             90deg,
-            transparent 0%,
-            rgba(0, 0, 0, 0.25) 15%,
-            black 35%,
+            rgba(0, 0, 0, 0.35) 0%,
+            black 25%,
             black 100%
         );
 
     -webkit-mask-image:
         linear-gradient(
             90deg,
-            transparent 0%,
-            rgba(0, 0, 0, 0.25) 15%,
-            black 35%,
+            rgba(0, 0, 0, 0.35) 0%,
+            black 25%,
             black 100%
         );
-
-    @media (max-width: 400px) {
-        width: 64%;
-    }
-
-    @media (max-width: 360px) {
-        width: 62%;
-    }
 `;
-
 
 /* =========================================
    ICONO
