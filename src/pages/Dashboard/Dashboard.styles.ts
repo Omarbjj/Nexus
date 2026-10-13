@@ -502,25 +502,17 @@ export const RecommendationText = styled.span`
 export const ProgressCard = styled.section`
     width: 100%;
     box-sizing: border-box;
-
     padding: 22px;
-
     border-radius: 26px;
-
     border: 1px solid #1b3440;
-
     background: #09161c;
-
     margin-bottom: 25px;
-
     overflow: hidden;
-
     @media (max-width: 600px) {
         padding: 16px;
         border-radius: 22px;
     }
 `;
-
 
 /* =========================================
    HEADER
@@ -562,48 +554,6 @@ export const ProgressTitle = styled.h2`
 
     white-space: nowrap;
 `;
-
-
-export const PeriodButton = styled.button`
-    flex-shrink: 0;
-
-    height: 38px;
-
-    padding: 0 14px;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    gap: 6px;
-
-    border-radius: 20px;
-
-    border: 1px solid #21404e;
-
-    background: #0c222b;
-
-    color: #c4ced7;
-
-    font-size: 13px;
-
-    white-space: nowrap;
-
-    cursor: pointer;
-
-    box-sizing: border-box;
-
-    @media (max-width: 420px) {
-        padding: 0 10px;
-
-        font-size: 11px;
-
-        height: 36px;
-    }
-`;
-
 
 /* =========================================
    GRID
@@ -1017,4 +967,228 @@ export const Improvement = styled.div`
             height: 12px;
         }
     }
+`;
+
+/*----------------------*/
+
+export const ExerciseAccordionList = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+`;
+
+export const ExerciseAccordion = styled.section`
+  overflow: hidden;
+  border: 1px solid #1c5063;
+  border-radius: 22px;
+  background: linear-gradient(135deg, #071d25, #061820);
+`;
+
+export const ExerciseAccordionHeader = styled.button`
+  width: 100%; min-height: 100px;
+  padding: 18px 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px; border: 0;
+  background: transparent;
+  color: #f4f2ed;
+  text-align: left;
+  cursor: pointer;
+
+  @media (max-width: 420px) {
+    min-height: 86px;
+    padding: 14px 12px;
+    gap: 10px;
+    }
+`;
+
+export const ExerciseAccordionIcon = styled.div<{ $color: string }>`
+  width: 68px;
+  height: 68px;
+  flex: 0 0 68px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: ${({ $color }) => $color};
+  svg { width: 52px; height: 52px; }
+
+  @media (max-width: 420px) {
+    width: 48px;
+    height: 48px;
+    flex-basis: 48px;
+    svg { width: 40px; height: 40px; }
+  }
+`;
+
+export const ExerciseAccordionInfo = styled.div`
+    flex: 1;
+    min-width: 0;
+`;
+
+export const ExerciseAccordionTitle = styled.h3`
+  margin: 0 0 6px;
+  font-family: "Times New Roman", serif;
+  font-size: clamp(22px, 5vw, 30px);
+  line-height: 1.05;
+  color: #f4f2ed;
+`;
+
+export const ExerciseAccordionSummary = styled.p`
+  margin: 0;
+  color: #b7d5e8;
+  font-family: "Times New Roman", serif;
+  font-size: clamp(14px, 3.5vw, 20px);
+  line-height: 1.2;
+  span { padding: 0 5px; color: #76cfff; }
+`;
+
+export const SeriesEditorPanel = styled.div`
+  margin: 0 14px 14px;
+  padding: clamp(14px, 3.5vw, 22px);
+  border: 1px solid #17495b;
+  border-radius: 20px;
+  background: rgba(3,20,27,.58);
+`;
+
+export const SeriesEditorDescription = styled.p`
+  margin: 0 0 16px;
+  color: #b7d5e8;
+  font-family: "Times New Roman", serif;
+  font-size: clamp(15px, 3.8vw, 20px);
+`;
+
+export const SeriesMessage = styled.p`
+  margin: 12px 0 0;
+  color: #ffb6b6;
+  font-size: 13px;
+  line-height: 1.4;
+`;
+
+export const SeriesRow = styled.div`
+  display: grid;
+  grid-template-columns: minmax(70px, 1fr) auto 30px;
+  align-items: center;
+  gap: clamp(6px, 2vw, 14px);
+  min-height: 78px;
+  padding: 10px clamp(8px, 2.5vw, 18px);
+  margin-bottom: 12px;
+  border: 1px solid #17495b;
+  border-radius: 18px;
+  background: rgba(5,25,33,.78);
+
+  @media (max-width: 420px) {
+    grid-template-columns: minmax(60px,1fr) auto 26px;
+    gap: 5px; padding: 9px 7px;
+}`;
+
+export const SeriesLabel = styled.div`
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  font-family: "Times New Roman", serif;
+  strong { color: #f4f2ed; font-size: clamp(16px, 4vw, 22px); }
+  span { color: #b7d5e8; font-size: clamp(12px, 3.2vw, 17px); }
+`;
+
+export const SeriesControls = styled.div`
+    display: flex;
+    align-items: center;
+    gap: clamp(4px, 1.4vw, 12px);
+`;
+
+export const SeriesStepButton = styled.button`
+  width: clamp(29px, 7vw, 48px);
+  height: clamp(29px, 7vw, 48px);
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #245269;
+  border-radius: 50%;
+  background: #102f40; color: #f4f2ed;
+  cursor: pointer;
+  &:disabled { opacity: .4; cursor: not-allowed; }
+`;
+export const SeriesValue = styled.strong`
+  width: clamp(44px, 12vw, 100px);
+  height: clamp(38px, 7.5vw, 52px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #245269;
+  border-radius: 13px;
+  background: #071820;
+  color: #f4f2ed;
+  font-family: "Times New Roman", serif;
+  font-size: clamp(20px, 5vw, 30px);
+`;
+
+export const DeleteSeriesButton = styled.button`
+  width: 30px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  background: transparent;
+  color: #ff596c;
+  cursor: pointer;
+`;
+
+export const AddSeriesButton = styled.button`
+  width: 100%;
+  min-height: 58px;
+  margin-top: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  border: 1px dashed #159bd1;
+  border-radius: 18px;
+  background: transparent;
+  color: #20b9f4;
+  font-family: "Times New Roman", serif;
+  font-size: clamp(17px, 4vw, 22px);
+  font-weight: 700;
+  cursor: pointer;
+`;
+
+export const SeriesActions = styled.div`
+  display: grid;
+  grid-template-columns: minmax(0,.8fr) minmax(0,1.3fr);
+  gap: 12px;
+  margin-top: 24px;
+  @media (max-width: 380px) {
+    grid-template-columns: 1fr;
+}`;
+
+export const CancelSeriesButton = styled.button`
+  min-height: 54px;
+  padding: 10px 14px;
+  border: 1px solid #b7d5e8;
+  border-radius: 17px;
+  background: transparent;
+  color: #f4f2ed;
+  font-family: "Times New Roman", serif;
+  font-size: 17px;
+  cursor: pointer;
+  &:disabled { opacity: .5; cursor: not-allowed; }
+`;
+
+export const SaveSeriesButton = styled.button`
+  min-height: 54px;
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  border: 0;
+  border-radius: 17px;
+  background: linear-gradient(110deg,#0788f9,#0879ed);
+  color: #fff;
+  font-family: "Times New Roman", serif;
+  font-size: clamp(14px,3.8vw,19px);
+  cursor: pointer;
+  &:disabled { opacity: .6; cursor: wait; }
 `;

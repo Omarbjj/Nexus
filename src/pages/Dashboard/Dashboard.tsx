@@ -8,14 +8,11 @@ import {
 import { useNavigate } from "react-router";
 import {
     ArrowLeft,
-    ArrowUp,
     CalendarDays,
     Check,
-    ChevronDown,
     Clock3,
     MapPin,
     Minus,
-    Pencil,
     Plus,
     Shirt,
     ShoppingBag,
@@ -24,6 +21,10 @@ import {
     CalendarPlus,
     Users,
     User,
+    ChevronUp,
+    ChevronDown,
+    Trash2,
+    Save,
 } from "lucide-react";
 
 import {
@@ -67,71 +68,79 @@ import {
     ProgressCard,
     ProgressHeader,
     ProgressTitle,
-    PeriodButton,
 
-    ProgressGrid,
-    ProgressItem,
-    ProgressItemHeader,
-    ExerciseIcon,
-    ExerciseName,
-    EditButton,
-
-    ProgressValueContainer,
-    DecreaseButton,
-    IncreaseButton,
-    ProgressValue,
-
-    Improvement,
+    ExerciseAccordionList,
+    ExerciseAccordion,
+    ExerciseAccordionHeader,
+    ExerciseAccordionIcon,
+    ExerciseAccordionInfo,
+    ExerciseAccordionTitle,
+    ExerciseAccordionSummary,
+    SeriesEditorPanel,
+    SeriesEditorDescription,
+    SeriesMessage,
+    SeriesRow,
+    SeriesLabel,
+    SeriesControls,
+    SeriesStepButton,
+    SeriesValue,
+    DeleteSeriesButton,
+    AddSeriesButton,
+    SeriesActions,
+    CancelSeriesButton,
+    SaveSeriesButton,
 } from "./Dashboard.styles";
 import { confirmarAsistencia } from "../../services/asistenciaService";
 import { getClases } from "../../services/clasesService";
 import { getCurrentUser } from "../../services/userService";
 import { Button } from "@mui/material";
 
+import { obtenerSeriesEjercicio, guardarSeriesEjercicio, type SerieEjercicio } from "../../services/ejerciciosService";
 
 interface ProgressItemData {
-    id: string;
-    name: string;
-    value: number;
-    color: string;
-    icon: "planchas" | "abdominales" | "sentadillas" | "flexiones";
-    improvement: number;
+  id: ExerciseId;
+  name: string;
+  value: number;
+  color: string;
+  icon: ExerciseId;
+  improvement: number;
 }
 
+type ExerciseId = "planchas" | "sentadillas" | "dominadas" | "paralelas";
 
 const initialProgress: ProgressItemData[] = [
-    {
-        id: "planchas",
-        name: "Planchas",
-        value: 35,
-        color: "#64D6B0",
-        icon: "planchas",
-        improvement: 5,
-    },
-    {
-        id: "abdominales",
-        name: "Abdominales",
-        value: 42,
-        color: "#FF9A4A",
-        icon: "abdominales",
-        improvement: 8,
-    },
-    {
-        id: "sentadillas",
-        name: "Sentadillas",
-        value: 50,
-        color: "#A67CFF",
-        icon: "sentadillas",
-        improvement: 10,
-    },
-    {
-        id: "flexiones",
-        name: "Flexiones",
-        value: 30,
-        color: "#FF5964",
-        icon: "flexiones",
-        improvement: 3,
-    },
+  {
+    id: "planchas",
+    name: "Planchas",
+    value: 0,
+    color: "#64D6B0",
+    icon: "planchas",
+    improvement: 5,
+  },
+  {
+    id: "sentadillas",
+    name: "Sentadillas",
+    value: 0,
+    color: "#A67CFF",
+    icon: "sentadillas",
+    improvement: 10,
+  },
+  {
+    id: "dominadas",
+    name: "Dominadas",
+    value: 0,
+    color: "#FF9A4A",
+    icon: "dominadas",
+    improvement: 8,
+  },
+  {
+    id: "paralelas",
+    name: "Paralelas",
+    value: 0,
+    color: "#FF5964",
+    icon: "paralelas",
+    improvement: 3,
+  },
 ];
 
 const getExerciseIcon = (
@@ -148,13 +157,13 @@ const getExerciseIcon = (
     case "planchas":
       return <GiPlanks {...iconProps} />;
 
-    case "abdominales":
+    case "dominadas":
       return <GiPush {...iconProps} />;
 
     case "sentadillas":
       return <GiWeightLiftingUp {...iconProps} />;
 
-    case "flexiones":
+    case "paralelas":
       return <GiWeightLiftingDown {...iconProps} />;
 
     default:
@@ -164,7 +173,15 @@ const getExerciseIcon = (
 
 function Dashboard() {
 
+    const toLocalDateString = (date: Date) => `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
+
+    const [seriesError, setSeriesError] = useState<string | null>(null);
+
     const navigate = useNavigate();
+
+    const [loadingSeries, setLoadingSeries] = useState(false);
+
+    const [savingSeries, setSavingSeries] = useState(false);
 
     const [progress, setProgress] =
         useState<ProgressItemData[]>(initialProgress);
@@ -175,29 +192,13 @@ function Dashboard() {
     const [confirmed, setConfirmed] =
         useState(false);
 
+    const [draftSeries, setDraftSeries] = useState<SerieEjercicio[]>([]);
 
-    const updateValue = (
-        id: string,
-        amount: number
-    ) => {
+    const [seriesByExercise, setSeriesByExercise] = useState<Record<ExerciseId, SerieEjercicio[]>>({
+      planchas: [], sentadillas: [], dominadas: [], paralelas: [],
+    });
 
-        setProgress((current) =>
-            current.map((item) => {
-
-                if (item.id !== id) {
-                    return item;
-                }
-
-                return {
-                    ...item,
-                    value: Math.max(
-                        0,
-                        item.value + amount
-                    ),
-                };
-            })
-        );
-    };
+    const [selectedProgressDate, setSelectedProgressDate] = useState(toLocalDateString(new Date()));
 
     const [clases, setClases] = useState<any[]>([]);
     const [user, setUser] = useState<any>(null);
@@ -246,6 +247,89 @@ function Dashboard() {
         }
 
     };
+
+    const cancelSeriesEditing = () => {
+      if (editing) setDraftSeries(seriesByExercise[editing]);
+      setSeriesError(null);
+      setEditing(null);
+    };
+
+    const saveExerciseSeries = async () => {
+      if (!editing) return;
+      setSavingSeries(true);
+      setSeriesError(null);
+      const exercise = editing;
+      const normalized = draftSeries.map((row, index) => ({
+        numero_serie: index + 1, valor: row.valor,
+      }));
+      try {
+        await guardarSeriesEjercicio(exercise, selectedProgressDate, normalized);
+        setSeriesByExercise((current) => ({ ...current, [exercise]: normalized }));
+        setProgress((current) => current.map((item) => item.id === exercise ? {
+          ...item, value: normalized.reduce((sum, row) => sum + row.valor, 0),
+        } : item));
+        setEditing(null);
+      } catch (error) {
+        console.error("No se pudieron guardar las series", error);
+        setSeriesError("No se pudieron guardar los cambios. Revisa Supabase e inténtalo de nuevo.");
+      } finally {
+        setSavingSeries(false);
+      }
+    };
+
+    const openExerciseEditor = async (exercise: ExerciseId) => {
+      if (editing === exercise) { setEditing(null); return; }
+      setEditing(exercise);
+      setLoadingSeries(true);
+      setSeriesError(null);
+      try {
+        setDraftSeries(await obtenerSeriesEjercicio(exercise, selectedProgressDate));
+      } catch (error) {
+        console.error(error);
+        setDraftSeries([]);
+        setSeriesError("No se pudieron cargar las series. Verifica tu sesión y las políticas RLS.");
+      } finally {
+        setLoadingSeries(false);
+      }
+    };
+
+    const removeSeries = (number: number) => setDraftSeries((rows) =>
+      rows.filter((row) => row.numero_serie !== number)
+        .map((row, index) => ({ ...row, numero_serie: index + 1 }))
+    );
+
+    const changeSeriesValue = (number: number, amount: number) => {
+      setDraftSeries((rows) => rows.map((row) =>
+        row.numero_serie === number ? { ...row, valor: Math.max(0, row.valor + amount) } : row
+      ));
+    };
+
+    const addSeries = () => setDraftSeries((rows) => [
+      ...rows,
+      { numero_serie: rows.length ? Math.max(...rows.map((row) => row.numero_serie)) + 1 : 1, valor: 0 },
+    ]);
+
+    useEffect(() => {
+      let active = true;
+      const loadSummaries = async () => {
+        try {
+          const ids: ExerciseId[] = ["planchas", "sentadillas", "dominadas", "paralelas"];
+          const entries = await Promise.all(ids.map(async (id) => [id, await obtenerSeriesEjercicio(id, selectedProgressDate)] as const));
+          if (!active) return;
+          const next = { planchas: [], sentadillas: [], dominadas: [], paralelas: [] } as Record<ExerciseId, SerieEjercicio[]>;
+          entries.forEach(([id, rows]) => { next[id] = rows; });
+          setSeriesByExercise(next);
+          setProgress((current) => current.map((item) => ({
+            ...item,
+            value: next[item.id].reduce((sum, serie) => sum + serie.valor, 0),
+          })));
+        } catch (error) {
+          console.error("No se pudo cargar el progreso", error);
+        }
+      };
+      void loadSummaries();
+      return () => { active = false; };
+    }, [selectedProgressDate]);
 
     useEffect(() => {
 
@@ -308,14 +392,14 @@ function Dashboard() {
                 <DatesContainer>
 
                     {[
-                        "06",
-                        "13",
-                        "20",
-                        "27",
+                        "17",
+                        "18",
+                        "24",
+                        "25",
                     ].map((day) => {
 
                         const selected =
-                            day === "27";
+                            day === "17";
 
                         return (
                             <DateCard
@@ -324,7 +408,7 @@ function Dashboard() {
                             >
 
                                 <DateDay>
-                                    DOM
+                                    SAB
                                 </DateDay>
 
                                 <DateNumber>
@@ -332,7 +416,7 @@ function Dashboard() {
                                 </DateNumber>
 
                                 <DateMonth>
-                                    SEP
+                                    OCT
                                 </DateMonth>
 
                             </DateCard>
@@ -518,92 +602,85 @@ function Dashboard() {
                             Mi progreso
                         </ProgressTitle>
 
-                        <PeriodButton
-                            type="button"
-                        >
-                            Últimas 4 semanas
-                            <ChevronDown size={17} />
-                        </PeriodButton>
-
                     </ProgressHeader>
 
+                    <ExerciseAccordionList>
+                      {progress.map((item) => {
+                        const expanded = editing === item.id;
+                        const series = seriesByExercise[item.id] ?? [];
+                        const total = series.reduce((sum, row) => sum + row.valor, 0);
 
-                    <ProgressGrid>
+                        return (
+                          <ExerciseAccordion key={item.id}>
+                            <ExerciseAccordionHeader
+                              type="button"
+                              aria-expanded={expanded}
+                              onClick={() => void openExerciseEditor(item.id)}
+                            >
+                              <ExerciseAccordionIcon $color={item.color}>
+                                {getExerciseIcon(item.icon, item.color)}
+                              </ExerciseAccordionIcon>
+                              <ExerciseAccordionInfo>
+                                <ExerciseAccordionTitle>{item.name}</ExerciseAccordionTitle>
+                                <ExerciseAccordionSummary>
+                                  {series.length} series <span>•</span> {total} repeticiones
+                                </ExerciseAccordionSummary>
+                              </ExerciseAccordionInfo>
+                              {expanded ? <ChevronUp size={27} color="#35bfff" /> : <ChevronDown size={27} color="#35bfff" />}
+                            </ExerciseAccordionHeader>
 
-                        {progress.map((item) => (
-
-                            <ProgressItem key={item.id}>
-
-                                <ProgressItemHeader>
-
-                                    <ExerciseIcon>
-                                        {getExerciseIcon(
-                                            item.icon,
-                                            item.color
-                                        )}
-                                    </ExerciseIcon>
-
-
-                                    <ExerciseName>
-                                        {item.name}
-                                    </ExerciseName>
-
-
-                                    <EditButton
-                                        type="button"
-                                        onClick={() =>
-                                            setEditing(
-                                                editing === item.id
-                                                    ? null
-                                                    : item.id
-                                            )
-                                        }
-                                    >
-                                        <Pencil size={17} />
-                                    </EditButton>
-
-                                </ProgressItemHeader>
-
-                                <ProgressValueContainer>
-
-                                    <DecreaseButton
-                                        type="button"
-                                        onClick={() =>
-                                            updateValue(item.id, -1)
-                                        }
-                                    >
-                                        <Minus size={18} />
-                                    </DecreaseButton>
-
-                                    <ProgressValue>
-                                        {item.value}
-                                    </ProgressValue>
-
-                                    <IncreaseButton
-                                        type="button"
-                                        onClick={() =>
-                                            updateValue(item.id, 1)
-                                        }
-                                    >
-                                        <Plus size={18} />
-                                    </IncreaseButton>
-
-                                </ProgressValueContainer>
-
-                                <Improvement>
-
-                                    <ArrowUp size={15} />
-
-                                    +{item.improvement} esta semana
-
-                                </Improvement>
-
-                            </ProgressItem>
-
-                        ))}
-
-                    </ProgressGrid>
-
+                            {expanded && (
+                              <SeriesEditorPanel>
+                                <SeriesEditorDescription>Modifica tus series y guarda cuando termines.</SeriesEditorDescription>
+                                {loadingSeries ? <SeriesMessage>Cargando series...</SeriesMessage> : (
+                                  <>
+                                    {draftSeries.map((serie) => (
+                                      <SeriesRow key={serie.numero_serie}>
+                                        <SeriesLabel>
+                                          <strong>Serie {serie.numero_serie}</strong>
+                                          <span>Repeticiones</span>
+                                        </SeriesLabel>
+                                        <SeriesControls>
+                                          <SeriesStepButton
+                                            type="button"
+                                            aria-label={`Disminuir serie ${serie.numero_serie}`}
+                                            disabled={serie.valor <= 0}
+                                            onClick={() => changeSeriesValue(serie.numero_serie, -1)}
+                                          ><Minus size={21} /></SeriesStepButton>
+                                          <SeriesValue>{serie.valor}</SeriesValue>
+                                          <SeriesStepButton
+                                            type="button"
+                                            aria-label={`Aumentar serie ${serie.numero_serie}`}
+                                            onClick={() => changeSeriesValue(serie.numero_serie, 1)}
+                                          ><Plus size={21} /></SeriesStepButton>
+                                        </SeriesControls>
+                                        <DeleteSeriesButton
+                                          type="button"
+                                          aria-label={`Eliminar serie ${serie.numero_serie}`}
+                                          onClick={() => removeSeries(serie.numero_serie)}
+                                        ><Trash2 size={22} /></DeleteSeriesButton>
+                                      </SeriesRow>
+                                    ))}
+                                    <AddSeriesButton type="button" onClick={addSeries}>
+                                      <Plus size={24} /> Agregar serie
+                                    </AddSeriesButton>
+                                    {seriesError && <SeriesMessage role="alert">{seriesError}</SeriesMessage>}
+                                    <SeriesActions>
+                                      <CancelSeriesButton type="button" onClick={cancelSeriesEditing} disabled={savingSeries}>
+                                        Cancelar
+                                      </CancelSeriesButton>
+                                      <SaveSeriesButton type="button" onClick={() => void saveExerciseSeries()} disabled={savingSeries || loadingSeries}>
+                                        <Save size={20} /> {savingSeries ? "Guardando..." : "Guardar cambios"}
+                                      </SaveSeriesButton>
+                                    </SeriesActions>
+                                  </>
+                                )}
+                              </SeriesEditorPanel>
+                            )}
+                          </ExerciseAccordion>
+                        );
+                      })}
+                    </ExerciseAccordionList>
                 </ProgressCard>
 
                 {/* ================= NAVIGATION ================= */}
