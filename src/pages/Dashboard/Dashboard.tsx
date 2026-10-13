@@ -186,8 +186,7 @@ function Dashboard() {
     const [progress, setProgress] =
         useState<ProgressItemData[]>(initialProgress);
 
-    const [editing, setEditing] =
-        useState<string | null>(null);
+    const [editing, setEditing] = useState<ExerciseId | null>(null);
 
     const [confirmed, setConfirmed] =
         useState(false);
