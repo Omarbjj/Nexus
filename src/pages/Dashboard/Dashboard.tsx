@@ -97,6 +97,8 @@ import { Button } from "@mui/material";
 
 import { obtenerSeriesEjercicio, guardarSeriesEjercicio, type SerieEjercicio } from "../../services/ejerciciosService";
 
+type ExerciseId = "planchas" | "sentadillas" | "dominadas" | "paralelas";
+
 interface ProgressItemData {
   id: ExerciseId;
   name: string;
@@ -105,8 +107,6 @@ interface ProgressItemData {
   icon: ExerciseId;
   improvement: number;
 }
-
-type ExerciseId = "planchas" | "sentadillas" | "dominadas" | "paralelas";
 
 const initialProgress: ProgressItemData[] = [
   {
@@ -199,6 +199,8 @@ function Dashboard() {
     });
 
     const [selectedProgressDate, setSelectedProgressDate] = useState(toLocalDateString(new Date()));
+
+    console.log('setSelectedProgressDate',setSelectedProgressDate);
 
     const [clases, setClases] = useState<any[]>([]);
     const [user, setUser] = useState<any>(null);
