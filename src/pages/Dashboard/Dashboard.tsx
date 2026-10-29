@@ -526,7 +526,7 @@ function Dashboard() {
                     </TrainingCard>
                 )}
 
-                {/* ================= RECOMENDACIONES ================= */}
+                {/* ================= RECOMENDACIONES =============== */}
 
                 <RecommendationsCard>
 
