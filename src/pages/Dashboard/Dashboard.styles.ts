@@ -80,21 +80,36 @@ export const MonthTitle = styled.h2`
    FECHAS
 ========================================= */
 
+export const DatesWrapper = styled.div`
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+`;
+
 export const DatesContainer = styled.div`
     display: grid;
 
-    grid-template-columns:
-        repeat(4, minmax(0, 1fr));
+    grid-auto-flow: column;
+    grid-auto-columns: calc((100% - 42px) / 4);
 
     gap: clamp(7px, 2vw, 14px);
 
     width: 100%;
 
+    overflow: hidden;
+
     margin-bottom: 24px;
 `;
 
+export const NavigationButton = styled.button`
+    flex-shrink: 0;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+`;
 
-export const DateCard = styled.button<{
+export const Container = styled.button<{
     $selected?: boolean;
 }>`
     min-width: 0;
