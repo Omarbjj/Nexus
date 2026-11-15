@@ -107,6 +107,7 @@ export const NavigationButton = styled.button`
     border: none;
     background: transparent;
     cursor: pointer;
+    color: #ffffff;
 `;
 
 export const Container = styled.button<{
