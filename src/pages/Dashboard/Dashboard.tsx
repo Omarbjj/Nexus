@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
     GiPlanks,
     GiPush,
@@ -41,10 +41,6 @@ import {
     MonthTitle,
 
     DatesContainer,
-    DateCard,
-    DateDay,
-    DateNumber,
-    DateMonth,
 
     TrainingCard,
     TrainingHeader,
@@ -89,6 +85,8 @@ import {
     SeriesActions,
     CancelSeriesButton,
     SaveSeriesButton,
+    DatesWrapper,
+    NavigationButton,
 } from "./Dashboard.styles";
 import { confirmarAsistencia } from "../../services/asistenciaService";
 import { getClases } from "../../services/clasesService";
@@ -96,6 +94,8 @@ import { getCurrentUser } from "../../services/userService";
 import { Button } from "@mui/material";
 
 import { obtenerSeriesEjercicio, guardarSeriesEjercicio, type SerieEjercicio } from "../../services/ejerciciosService";
+import { DateCard } from "./components/DateCard/DateCard";
+import { getSundaysOfCurrentMonth } from "../../lib/utils/date";
 
 type ExerciseId = "planchas" | "sentadillas" | "dominadas" | "paralelas";
 
@@ -206,6 +206,8 @@ function Dashboard() {
 
     const [confirmando, setConfirmando] = useState(false);
     const [asistenciaConfirmada, setAsistenciaConfirmada] = useState(false);
+
+    const { sundays, closestSunday, month, year } = getSundaysOfCurrentMonth();
 
     // Obtener la clase que está PROGRAMADA
     const claseProgramada = clases.find(
@@ -361,6 +363,22 @@ function Dashboard() {
 
     }, []);
 
+    const containerRef = useRef<HTMLDivElement>(null);
+
+    const handleNext = () => {
+        containerRef.current?.scrollBy({
+            left: containerRef.current.clientWidth,
+            behavior: 'smooth'
+        });
+    };
+
+    const handlePrevious = () => {
+        containerRef.current?.scrollBy({
+            left: -containerRef.current.clientWidth,
+            behavior: 'smooth'
+        });
+    };
+
     return (
         <Page>
 
@@ -382,7 +400,7 @@ function Dashboard() {
                     </PageTitle>
 
                     <MonthTitle>
-                        Setiembre <strong>2026</strong>
+                        {month.toLocaleString('es-PE', { month: 'long' })} <strong>{year}</strong>
                     </MonthTitle>
 
                 </ClassesHeader>
@@ -390,42 +408,26 @@ function Dashboard() {
 
                 {/* ================= FECHAS ================= */}
 
-                <DatesContainer>
+                <DatesWrapper>
+                    <NavigationButton onClick={handlePrevious}>
+                        ❮
+                    </NavigationButton>
 
-                    {[
-                        "17",
-                        "18",
-                        "24",
-                        "25",
-                    ].map((day) => {
-
-                        const selected =
-                            day === "17";
-
-                        return (
+                    <DatesContainer ref={containerRef}>
+                        {sundays.map((day) => (
                             <DateCard
                                 key={day}
-                                $selected={selected}
-                            >
+                                day={day}
+                                selected={day === closestSunday}
+                                month={month}
+                            />
+                        ))}
+                    </DatesContainer>
 
-                                <DateDay>
-                                    SAB
-                                </DateDay>
-
-                                <DateNumber>
-                                    {day}
-                                </DateNumber>
-
-                                <DateMonth>
-                                    OCT
-                                </DateMonth>
-
-                            </DateCard>
-                        );
-
-                    })}
-
-                </DatesContainer>
+                    <NavigationButton onClick={handleNext}>
+                        ❯
+                    </NavigationButton>
+                </DatesWrapper>
 
                 {/* ================= PRÓXIMO ENTRENAMIENTO ================= */}
                 {claseProgramada && (
