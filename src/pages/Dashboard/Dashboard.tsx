@@ -15,7 +15,6 @@ import {
     Minus,
     Plus,
     Shirt,
-    ShoppingBag,
     Droplets,
     Activity,
     CalendarPlus,
@@ -25,6 +24,11 @@ import {
     ChevronDown,
     Trash2,
     Save,
+    Watch,
+    Backpack,
+    Scissors,
+    Gem,
+    type LucideIcon,
 } from "lucide-react";
 
 import {
@@ -96,6 +100,46 @@ import { Button } from "@mui/material";
 import { obtenerSeriesEjercicio, guardarSeriesEjercicio, type SerieEjercicio } from "../../services/ejerciciosService";
 import { DateCard } from "./components/DateCard/DateCard";
 import { getSundaysOfCurrentMonth } from "../../lib/utils/date";
+
+interface RecommendationItemData {
+    id: string;
+    icon: LucideIcon;
+    text: string;
+
+}
+
+const PreTrainingRecommendation: RecommendationItemData[] = [
+    {
+        id: "clean-clothes",
+        icon: Shirt,
+        text: "Usa siempre ropa limpia.",
+    },
+    {
+        id: "nails",
+        icon: Scissors,
+        text: "Mantén las uñas cortas y limpias.",
+    },
+    {
+        id: "hydration",
+        icon: Droplets,
+        text: "Lleva tu botella de agua y mantente hidratado.",
+    },
+    {
+        id: "punctuality",
+        icon: Watch,
+        text: "Llega puntual al entrenamiento.",
+    },
+    {
+        id: "accesories",
+        icon: Gem,
+        text: "Retira los accesorios personales.",
+    },
+    {
+        id: "equipment",
+        icon: Backpack,
+        text: "Lleva tus implementos de entrenamiento.",
+    },
+]
 
 type ExerciseId = "planchas" | "sentadillas" | "dominadas" | "paralelas";
 
@@ -536,60 +580,15 @@ function Dashboard() {
                         Antes de entrenar
                     </SectionTitle>
 
-
                     <RecommendationList>
-
-                        <RecommendationItem>
-
-                            <RecommendationIcon>
-                                <Droplets size={22} />
-                            </RecommendationIcon>
-
-                            <RecommendationText>
-                                Lleva agua y mantente hidratado.
-                            </RecommendationText>
-
-                        </RecommendationItem>
-
-
-                        <RecommendationItem>
-
-                            <RecommendationIcon>
-                                <Clock3 size={22} />
-                            </RecommendationIcon>
-
-                            <RecommendationText>
-                                Llega puntual.
-                            </RecommendationText>
-
-                        </RecommendationItem>
-
-
-                        <RecommendationItem>
-
-                            <RecommendationIcon>
-                                <Shirt size={22} />
-                            </RecommendationIcon>
-
-                            <RecommendationText>
-                                Ven debidamente vestido (kimono).
-                            </RecommendationText>
-
-                        </RecommendationItem>
-
-
-                        <RecommendationItem>
-
-                            <RecommendationIcon>
-                                <ShoppingBag size={22} />
-                            </RecommendationIcon>
-
-                            <RecommendationText>
-                                Lleva tus implementos necesarios.
-                            </RecommendationText>
-
-                        </RecommendationItem>
-
+                        {PreTrainingRecommendation.map(({id, icon: Icon, text})=> (
+                            <RecommendationItem key={id}>
+                                <RecommendationIcon>
+                                    <Icon size={22} />
+                                </RecommendationIcon>
+                                <RecommendationText>{text}</RecommendationText>
+                            </RecommendationItem>
+                        ))}
                     </RecommendationList>
 
                 </RecommendationsCard>
